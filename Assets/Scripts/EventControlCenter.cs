@@ -10,7 +10,7 @@ public interface EventControlCenter : IEventSystemHandler
     /// </summary>
     void GameObjectMessageReceive(GameObject g);
     /// <summary>
-    /// 方法：判断型消息传递
+    /// 方法：豆子状态消息传递
     /// </summary>
     void PacDotsMessageReceive(SuperDotStyle sds);
 

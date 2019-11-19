@@ -79,7 +79,6 @@ public class GameManager : MonoBehaviour, EventControlCenter
             StartCoroutine(PlayStartCutDown());
             StartPanel.SetActive(false);
             OneClick = true;
-            Debug.Log("点击开始");
         }
     }
     /// <summary>
@@ -100,9 +99,6 @@ public class GameManager : MonoBehaviour, EventControlCenter
         GamePanel.SetActive(true);
         GameStateControl(true);
         Invoke("CreateSuperDot", SuperDotTime);//延迟生成超级豆
-        Debug.Log("嘿北鼻");
-        //StateText=StateShow.GetComponent<Text>();
-        //StateText.text = "aaaaaaaaaa";
     }
 	
 	void Update () {
@@ -164,15 +160,9 @@ public class GameManager : MonoBehaviour, EventControlCenter
     {
         if (PacdotAlive.Count>=1)
         {
-            int tempIndex = Random.Range(0, PacdotAlive.Count);
-            //GameObject g = PacdotLive[tempIndex];
-            //ExecuteEvents.Execute<EventControlCenter>(MessageTarget, null, (x, y) => x.GameObjectMessageReceive(PacmanLive[tempIndex]));
-            BroadcastMessage("PacDotChange", PacdotAlive[tempIndex]);
-            Invoke("CreateSuperDot", SuperDotTime);//延迟生成超级豆
-        }
-        else
-        {
-            Debug.Log("我真的一滴都没有了");
+            int tempIndex = Random.Range(0, PacdotAlive.Count);     //随机选取场上豆子
+            BroadcastMessage("PacDotChange", PacdotAlive[tempIndex]);       //通知生成
+            Invoke("CreateSuperDot", SuperDotTime);//延迟生成下一个超级豆
         }
     }
     /// <summary>
@@ -205,7 +195,6 @@ public class GameManager : MonoBehaviour, EventControlCenter
                 break;
         }
         Invoke("SuperTimeEnd", SuperTime);//延迟解除变身
-        Debug.Log("我延时了");
     }
     public int TestIndex = 0;
     /// <summary>

@@ -12,7 +12,7 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
     public GameObject dotmap;
     public GameObject PacMan;
 
-    Vector3 ResurrectionPoint;                                            //复活点
+    Vector3 ResurrectionPoint;                                  //复活点
     PacMap mapSample=new PacMap(31,31);        //初始化地图
     PacGrid PacmanGrid;                                         //主角
 
@@ -31,7 +31,6 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
     private bool isReset = false;
     private bool isChase = true;
     private bool isEat = true;
-    //private float MyUpdateTime = 3.0f;
     private EnemyStatus LastEnemyStatus = new EnemyStatus();
 
     void Start()
@@ -49,8 +48,6 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
         gripMap = mapSample.simplemap;
 
         isMapInit = true;
-
-        //InvokeRepeating("MyUpdate",0,MyUpdateTime);
     }
     /// <summary>
     /// 方法：怪物归元回到起点
@@ -312,28 +309,24 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
                 isEat = true;
                 enemyStatus = EnemyStatus.Patrol;
                 spriteRender.color= new Color(1.0f,1.0f,1.0f,1.0f);
-                Debug.Log("255");
                 break;
             case SuperDotStyle.Still:
                 enemyStatus = EnemyStatus.Still;
                 isChase = false;
                 isEat = true;
                 spriteRender.color = new Color(1.0f, 1.0f, 1.0f,1.0f);
-                Debug.Log("5");
                 break;
             case SuperDotStyle.Strengthen:
                 enemyStatus = EnemyStatus.Flee;
                 isChase = false;
                 isEat = false;
                 spriteRender.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-                Debug.Log("5");
                 break;
             case SuperDotStyle.Invincible:
                 enemyStatus = EnemyStatus.Patrol;
                 isChase = false;
                 isEat = false;
                 spriteRender.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-                Debug.Log("5");
                 break;
         }
         //LastEnemyStatus = enemyStatus;

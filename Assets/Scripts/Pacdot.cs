@@ -52,11 +52,6 @@ private void OnTriggerEnter2D(Collider2D collision)
                 Debug.Log(this.gameObject.name + "超级变身！");
                 ExecuteEvents.Execute<EventControlCenter>(gameManager, null, (x, y) => x.GameObjectMessageReceive(gameObject));
             }
-            //Debug.Log("1");
-        }
-        else
-        {
-            Debug.Log("错误错误！！！");
         }
     }
 
