@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour, EventControlCenter
     public int SuperIndex = 0;
     public bool OneClick = false;
     public bool PacmanAlive = true;
-    public bool GameOver = false;
+    public bool GameEnd = false;
 
     public int Score = 0;               //分数
     public int EatenIndex = 0;       //已吃豆子的数量
@@ -65,6 +65,9 @@ public class GameManager : MonoBehaviour, EventControlCenter
 
     private List<GameObject> PacdotAlive = new List<GameObject>();     //场上存在的豆子（未强化）
 	// Use this for initialization
+    /// <summary>
+    /// 方法：初始化（脚本激活）
+    /// </summary>
 	void Start () {
         GameStateControl(false);
         //Invoke("CreateSuperDot",SuperDotTime);//延迟生成超级豆
@@ -100,9 +103,11 @@ public class GameManager : MonoBehaviour, EventControlCenter
         GameStateControl(true);
         Invoke("CreateSuperDot", SuperDotTime);//延迟生成超级豆
     }
-	
-	void Update () {
-        if ((PacmanAlive == false || EatenIndex == PacdotIndex) && GameOver==false)
+    /// <summary>
+    /// 方法：帧执行
+    /// </summary>
+    void Update () {
+        if ((PacmanAlive == false || EatenIndex == PacdotIndex) && GameEnd==false)
         {
             if (PacmanAlive)
             {
@@ -117,14 +122,14 @@ public class GameManager : MonoBehaviour, EventControlCenter
             StopAllCoroutines();
             CancelInvoke();
             GameStateControl(false);
-            StateText.text = "按任意键继续。。。";
-            GameOver = true;
+            StateText.text = "按空格键继续。。。";
+            GameEnd = true;
         }
-        if (GameOver)
+        if (GameEnd)
         {
-            if (Input.anyKeyDown)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                GameOver = false;
+                GameEnd = false;
                 SceneManager.LoadSceneAsync(0);
             }
         }
@@ -135,7 +140,9 @@ public class GameManager : MonoBehaviour, EventControlCenter
             ScoreText.text = "Score：\n\n" +Score;
         }
 	}
-
+    /// <summary>
+    /// 方法：初始化（this.GameObject激活）
+    /// </summary>
     private void Awake()
     {
         _instance = this;
@@ -148,7 +155,7 @@ public class GameManager : MonoBehaviour, EventControlCenter
     /// <summary>
     /// 方法：更新豆子数组
     /// </summary>
-    ///<param name="g">被吃掉的豆子
+    ///<param name="g">被吃掉的豆子</param>
     public void RemoveDot(GameObject g)
     {
         PacdotAlive.Remove(g);
@@ -168,7 +175,7 @@ public class GameManager : MonoBehaviour, EventControlCenter
     /// <summary>
     /// 方法：接收豆子消息
     /// </summary>
-    ///<param name="g">被吃掉的豆子
+    ///<param name="g">被吃掉的豆子</param>
     public void GameObjectMessageReceive(GameObject g)
     {
         RemoveDot(g);
@@ -176,7 +183,7 @@ public class GameManager : MonoBehaviour, EventControlCenter
     /// <summary>
     /// 方法：接收增益状态并显示
     /// </summary>
-    ///<param name="sds">增益状态
+    ///<param name="sds">增益状态</param>
     public void PacDotsMessageReceive(SuperDotStyle sds)
     {
         switch (sds)
@@ -200,7 +207,6 @@ public class GameManager : MonoBehaviour, EventControlCenter
     /// <summary>
     /// 方法：解除增益状态
     /// </summary>
-    ///<param name="sds">增益状态
     private void SuperTimeEnd()
     {
         TestIndex++;
@@ -217,7 +223,7 @@ public class GameManager : MonoBehaviour, EventControlCenter
     /// <summary>
     /// 方法：控制游戏状态
     /// </summary>
-    ///<param name="bStartPause">游戏状态
+    ///<param name="bStartPause">游戏状态</param>
     private void GameStateControl(bool bStartPause)
     {
         PacMan.GetComponent<PacManMove>().enabled = bStartPause;

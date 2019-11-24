@@ -298,13 +298,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 92
-    width: 1140
-    height: 416
+    width: 1167
+    height: 926
   m_ViewPositions:
     m_KeySerializationHelper:
     - {fileID: 1107504939652599568, guid: 978450bb77b88c946b078525c58d62d5, type: 2}
     m_ValueSerializationHelper:
-    - {x: 564.60004, y: 374.40002}
+    - {x: 631.2, y: 293.20007}
   m_PreviewAnimator: {fileID: 0}
   m_AnimatorController: {fileID: 0}
   m_BreadCrumbs: []
@@ -479,18 +479,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: 0c220000701c0000781c00006e1c00002026000030270000442a0000d827000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: EnemyMove
+      m_OriginalName: EnemyMove
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 1978
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 3}
     m_CreateAssetUtility:
@@ -611,10 +611,10 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
-    x: 8
-    y: 100
-    width: 1157
-    height: 910
+    x: 0
+    y: 92
+    width: 1167
+    height: 926
   m_SceneLighting: 1
   lastFramingTime: 194376.22168498888
   m_2DMode: 1

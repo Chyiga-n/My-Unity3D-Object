@@ -8,7 +8,7 @@ using UnityEngine;
 enum LandFormEnum
 {
     Block = 0,
-    Flatground = 1,
+    FlatGround = 1,
     Mountain = 2
 }
 public class PacGrid {

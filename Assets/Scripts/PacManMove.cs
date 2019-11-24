@@ -4,11 +4,17 @@ public class PacManMove : MonoBehaviour
 {
     public float PacManSpeed = 0.35f;      //移动速度
     Vector2 dest = Vector2.zero;
-    // Use this for initialization
+
+    /// <summary>
+    /// 方法：初始化（脚本激活）
+    /// </summary>
     void Start()
     {
         dest = transform.position;
     }
+    /// <summary>
+    /// 方法：固定频率执行
+    /// </summary>
     private void FixedUpdate()
     {
         Vector2 temp = Vector2.MoveTowards(transform.position, dest, PacManSpeed);
@@ -36,6 +42,11 @@ public class PacManMove : MonoBehaviour
             GetComponent<Animator>().SetFloat("DirY", dir.y);
         }
     }
+    /// <summary>
+    /// 方法：判断是否能朝此方向移动
+    /// </summary>
+    /// <param name="dir"></param>
+    /// <returns>bool：是否</returns>
     private bool Valid(Vector2 dir)
     {
         Vector2 pos = transform.position;

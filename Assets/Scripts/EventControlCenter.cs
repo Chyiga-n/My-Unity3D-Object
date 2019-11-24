@@ -13,6 +13,4 @@ public interface EventControlCenter : IEventSystemHandler
     /// 方法：豆子状态消息传递
     /// </summary>
     void PacDotsMessageReceive(SuperDotStyle sds);
-
-    
 }

@@ -15,21 +15,21 @@ public class PacMap {
     /// <summary>
     /// 字段：用网格节点描述的地图
     /// </summary>
-    internal PacGrid[,] simplemap;
+    internal PacGrid[,] simpleMap;
     /// <summary>
     /// 构造方法：初始化地图
     /// </summary>
-    ///<param name="x">地图长
-    ///<param name="y">地图宽
+    ///<param name="x">地图长</param>
+    ///<param name="y">地图宽</param>
     public PacMap(int x, int y)
     {
         LenX = x;
         LenY = y;
-        simplemap = new PacGrid[LenX, LenY];
+        simpleMap = new PacGrid[LenX, LenY];
         for (int i = 0; i < LenX; i++)
             for (int j = 0; j < LenY; j++)
             {
-                simplemap[i, j] = new PacGrid() { X = i, Y = j };
+                simpleMap[i, j] = new PacGrid() { X = i, Y = j };
             }
     }
     private PacGrid startGrid;
@@ -47,7 +47,7 @@ public class PacMap {
                 startGrid.GCostAttribute = 0;
                 startGrid.fatherGrid = null;
                 startGrid.PathAttribute = true;
-                simplemap[startGrid.X, startGrid.Y] = startGrid;
+                simpleMap[startGrid.X, startGrid.Y] = startGrid;
             }
             else startGrid = null;
         }
@@ -63,23 +63,23 @@ public class PacMap {
         {
             endGrid = value;
             endGrid.PathAttribute = true;
-            simplemap[endGrid.X, endGrid.Y] = endGrid;
+            simpleMap[endGrid.X, endGrid.Y] = endGrid;
         }
     }
     /// <summary>
     /// 方法：对所有网格的地形属性进行初始化设置从而生成一张地图
     /// </summary>
-    ///<param name="grid">当前节点
-    ///<param name="landform">地形选项
+    ///<param name="grid">当前节点</param>
+    ///<param name="landform">地形选项</param>
     internal void MapGridSet(PacGrid grid, byte landform)
     {
-        if (landform > landtypes)
+        if (landform > landTypes)
             return;
         else
             grid.LandAttribute = landform;
     }
     /// <summary>
-    /// 字段：地形总数
+    /// 字段：地形种类数
     /// </summary>
-    private int landtypes = Enum.GetValues(typeof(LandFormEnum)).Length - 1;
+    private int landTypes = Enum.GetValues(typeof(LandFormEnum)).Length - 1;
 }

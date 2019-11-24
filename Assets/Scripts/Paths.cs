@@ -9,9 +9,9 @@ public class Paths {
     /// <summary>
     /// 方法：判断当前节点是否在指定列表中，是则返回true
     /// </summary>
-    ///<param name="x">坐标x
-    ///<param name="y">坐标y
-    ///<param name="list">列表
+    ///<param name="x">坐标x</param>
+    ///<param name="y">坐标y</param>
+    ///<param name="list">列表</param>
     /// <returns>Bool：在指定列表中则返回true</returns>
     protected bool IsInList(int x, int y, List<PacGrid> list)
     {
@@ -25,8 +25,8 @@ public class Paths {
     /// <summary>
     /// 方法：从指定列表里获取指定节点
     /// </summary>
-    ///<param name="grid">节点
-    ///<param name="list">列表
+    ///<param name="grid">节点</param>
+    ///<param name="list">列表</param>
     /// <returns>Grid：返回指定节点</returns>
     protected PacGrid GetGridFromList(PacGrid grid, List<PacGrid> list)
     {
@@ -40,9 +40,9 @@ public class Paths {
     /// <summary>
     /// 方法：计算G耗费
     /// </summary>
-    ///<param name="x">坐标x
-    ///<param name="y">坐标y
-    ///<param name="sg">起点
+    ///<param name="x">坐标x</param>
+    ///<param name="y">坐标y</param>
+    ///<param name="sg">起点</param>
     /// <returns>Int：G值</returns>
     protected int GetGridCostG(PacGrid CurrentGrid, PacGrid sg)
     {
@@ -58,9 +58,9 @@ public class Paths {
     /// <summary>
     /// 方法：计算H耗费
     /// </summary>
-    ///<param name="x">坐标x
-    ///<param name="y">坐标y
-    ///<param name="eg">终点
+    ///<param name="x">坐标x</param>
+    ///<param name="y">坐标y</param>
+    ///<param name="eg">终点</param>
     /// <returns>Int：H值</returns>
     protected int GetGridCostH(int x, int y, PacGrid eg)
     {
@@ -69,7 +69,7 @@ public class Paths {
     /// <summary>
     /// 方法：从指定列表中获取F值最小的节点
     /// </summary>
-    ///<param name="list">列表
+    ///<param name="list">列表</param>
     /// <returns>Grid：F值最小的节点</returns>
     protected PacGrid GetMinFFromList(List<PacGrid> list)
     {
@@ -88,14 +88,14 @@ public class Paths {
     /// <summary>
     /// 方法：检查当前节点周边的节点
     /// </summary>
-    ///<param name="sg">当前节点
-    ///<param name="eg">终点
-    ///<param name="map">Map类的实例
+    ///<param name="sg">当前节点</param>
+    ///<param name="eg">终点</param>
+    ///<param name="map">Map类的实例</param>
     protected void CheckAround(PacGrid sg, PacGrid eg, PacMap map)//
     {
         int gridmapRow = map.LenY;//获取地图的行数
         int gridmapCol = map.LenX;//获取地图的列数
-        PacGrid[,] gridmap = map.simplemap;
+        PacGrid[,] gridmap = map.simpleMap;
         for (int i = sg.X - 1; i < sg.X + 2; i++)
             for (int j = sg.Y - 1; j < sg.Y + 2; j++)//筛选出相邻点
             {
@@ -124,9 +124,10 @@ public class Paths {
     /// <summary>
     /// 方法：寻路算法
     /// </summary>
-    ///<param name="sg">起点
-    ///<param name="eg">终点
-    ///<param name="map">Map类的实例
+    ///<param name="sg">起点</param>
+    ///<param name="eg">终点</param>
+    ///<param name="map">Map类的实例</param>
+    ///<returns>PacGrid：返回路径起点</returns>
     internal PacGrid Find(PacGrid sg, PacGrid eg, PacMap map)
     {
         openList.Clear();
@@ -153,7 +154,7 @@ public class Paths {
     /// <summary>
     /// 方法：保存路径
     /// </summary>
-    ///<param name="g">节点
+    ///<param name="g">节点</param>
     internal PacGrid Save(PacGrid g)
     {
         PacGrid TransGrid;

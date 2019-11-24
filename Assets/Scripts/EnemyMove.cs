@@ -28,11 +28,14 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
     public int PatrolRange = 60;                              //巡逻范围
     private Rigidbody2D enemyRigidbody2d;
     private SpriteRenderer spriteRender;
-    private bool isReset = false;
-    private bool isChase = true;
-    private bool isEat = true;
+    private bool isReset = false;                               //是否被重置
+    private bool isChase = true;                               //是否能追击
+    private bool isEat = true;                               //是否能吃PacMan
     private EnemyStatus LastEnemyStatus = new EnemyStatus();
 
+    /// <summary>
+    /// 方法：初始化（脚本激活）
+    /// </summary>
     void Start()
     {
         enemyRigidbody2d = GetComponent<Rigidbody2D>();
@@ -40,17 +43,17 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
         spriteRender=GetComponent<SpriteRenderer>();
         //设置障碍          
         foreach (Transform child in dotmap.transform)
-            mapSample.MapGridSet(mapSample.simplemap[(int)child.transform.position.x, (int)child.transform.position.y], 1);
+            mapSample.MapGridSet(mapSample.simpleMap[(int)child.transform.position.x, (int)child.transform.position.y], 1);
 
 
         EnemyReset();
 
-        gripMap = mapSample.simplemap;
+        gripMap = mapSample.simpleMap;
 
         isMapInit = true;
     }
     /// <summary>
-    /// 方法：怪物归元回到起点
+    /// 方法：怪物初始化
     /// </summary>
     private void EnemyReset()
     {
@@ -59,6 +62,9 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
         dY = (int)dest.y;
         nextGrid = new PacGrid() { X = dX, Y = dY };
     }
+    /// <summary>
+    /// 方法：固定频率执行
+    /// </summary>
     private void FixedUpdate()
     {
         if (transform.position != PacMan.transform.position&&enemyStatus!=EnemyStatus.Still)
@@ -76,7 +82,6 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
                             nextGrid = nextGrid.sunGrid;
                         else
                         {
-                            Debug.Log("到头了");
                             //PacGrid gg = PatrolTarget(nextGrid, PatrolRange);
                             //nextGrid = LookAt(nextGrid, gg);
                             CarryOut(enemyStatus);
@@ -123,7 +128,7 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
     /// <summary>
     /// 方法：根据怪物状态开始新一轮寻路
     /// </summary>
-    ///<param name="ES">怪物状态
+    ///<param name="ES">怪物状态</param>
     private void CarryOut(EnemyStatus ES)
     {
         switch (ES)
@@ -138,16 +143,16 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
                 Flee();
                 break;
             case EnemyStatus.Still:
-                Still();
                 break;
         }
     }
 
     /// <summary>
-    ///方法：寻找路径
-    /// <summary>
-    ///<param name="sg">寻路起点
-    ///<param name="eg">寻路终点
+    /// 方法：寻找路径
+    /// </summary>
+    /// <param name="sg">寻路起点</param>
+    /// <param name="eg">寻路终点</param>
+    /// <returns>PacGrid：返回路径的起点</returns>
     private PacGrid LookAt(PacGrid sg,PacGrid eg)
     {
         ClearPath();
@@ -160,21 +165,23 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
     }
 
     /// <summary>
-    ///方法：巡逻范围内随机寻点
-    /// <summary>
-    ///<param name="sg">当前位置
-    ///<param name="range">巡逻范围
+    /// 方法：巡逻范围内随机寻点
+    /// </summary>
+    /// <param name="sg">当前位置</param>
+    /// <param name="range">巡逻范围</param>
+    /// <returns>PacGrid：寻找到的随机点</returns>
     private PacGrid PatrolTarget(PacGrid sg,int range)
     {
         List<PacGrid> gripPath = isInRange(sg,gripMap,range);
         return gripPath[UnityEngine.Random.Range(0, gripPath.Count) - 1];
     }
     /// <summary>
-    ///方法：巡逻范围内寻找躲避点
-    /// <summary>
-    ///<param name="sg">当前位置
-    ///<param name="Target">目标位置
-    ///<param name="range">巡逻范围
+    /// 方法：巡逻范围内寻找躲避点
+    /// </summary>
+    /// <param name="sg">当前位置</param>
+    /// <param name="Target">目标位置</param>
+    /// <param name="range">巡逻范围</param>
+    /// <returns>PacGrid：躲避点</returns>
     private PacGrid DodgePoint(PacGrid sg,PacGrid Target, int range)
     {
         List<PacGrid> gripPath = isInRange(sg, gripMap,range);
@@ -187,20 +194,22 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
         return rg;
     }
     /// <summary>
-    ///方法：计算两个格子的路程
-    /// <summary>
-    /// <param name="sg">起点
-    /// <param name="sg">终点
+    /// 方法：计算两个格子的路程
+    /// </summary>
+    /// <param name="sg">起点</param>
+    /// <param name="eg">终点</param>
+    /// <returns>int：距离</returns>
     protected int GetDistance(PacGrid sg, PacGrid eg)
     {
         return (int)Math.Abs(sg.X - eg.X) + (int)Math.Abs(sg.Y -eg.Y);
     }
     /// <summary>
-    ///方法：寻找巡逻范围内所有路径点
-    /// <summary>
-    /// <param name="sg">当前位置
-    /// <param name="gripMap">网格路径图
-    /// <param name="range">巡逻范围
+    /// 方法：寻找巡逻范围内所有路径点
+    /// </summary>
+    /// <param name="sg">当前位置</param>
+    /// <param name="gripMap">网格路径图</param>
+    /// <param name="range">范围</param>
+    /// <returns>List PacGrid ：路径点集合</returns>
     private List<PacGrid> isInRange(PacGrid sg,PacGrid[,] gripMap,int range)
     {
         List<PacGrid> gripPath = new List<PacGrid>();
@@ -212,8 +221,8 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
         return gripPath;
     }
     /// <summary>
-    ///方法：巡逻寻路
-    /// <summary>
+    /// 方法：巡逻寻路
+    /// </summary>
     private void Patrol()
     {
         CurrentGrid = nextGrid;
@@ -226,8 +235,8 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
         //}
     }
     /// <summary>
-    ///方法：追击寻路
-    /// <summary>
+    /// 方法：追击寻路
+    /// </summary>
     private void Chase()
     {
         CurrentGrid = nextGrid;
@@ -236,8 +245,8 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
         //    nextGrid = nextGrid.sunGrid;
     }
     /// <summary>
-    ///方法：逃跑寻路
-    /// <summary>
+    /// 方法：逃跑寻路
+    /// </summary>
     private void Flee()
     {
         CurrentGrid = nextGrid;
@@ -247,15 +256,8 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
         //    nextGrid = nextGrid.sunGrid;
     }
     /// <summary>
-    ///方法：寻路停止
-    /// <summary>
-    private void Still()
-    {
-
-    }
-    /// <summary>
-    ///方法：路径记忆清除
-    /// <summary>
+    /// 方法：路径记忆清除
+    /// </summary>
     private void ClearPath()
     {
         PacGrid bg;
@@ -275,7 +277,10 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
             bg.sunGrid = null;
         }
     }
-   
+    /// <summary>
+    /// 方法：碰撞检测
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Pacman" )
@@ -297,9 +302,9 @@ public class EnemyMove : MonoBehaviour, EventControlCenter
         
     }
     /// <summary>
-    ///方法：接收增益状态信息并改变怪物状态
-    /// <summary>
-    ///<param name="sds">被吃豆子提供的增益状态
+    /// 方法：接收增益状态信息并改变怪物状态
+    /// </summary>
+    /// <param name="sds">增益状态</param>
     public void PacDotsMessageReceive(SuperDotStyle sds)
     {
         switch (sds)
